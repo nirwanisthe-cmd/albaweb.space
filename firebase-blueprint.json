@@ -1,0 +1,138 @@
+{
+  "entities": {
+    "Service": {
+      "title": "Service",
+      "description": "A service offered by the studio",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "benefits": { "type": "array", "items": { "type": "string" } },
+        "startingPrice": { "type": "string" },
+        "icon": { "type": "string", "description": "Lucide icon name" },
+        "order": { "type": "integer" }
+      },
+      "required": ["title", "description"]
+    },
+    "PricingPlan": {
+      "title": "Pricing Plan",
+      "description": "A professional agency pricing plan for Albecket Web Studio",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "slug": { "type": "string", "description": "Unique URL-friendly identifier" },
+        "shortDescription": { "type": "string" },
+        "price": { "type": "string", "description": "Numeric price as string or label" },
+        "currency": { "type": "string", "default": "LKR" },
+        "pricingType": { "type": "string", "enum": ["monthly", "one-time", "custom"] },
+        "customPriceLabel": { "type": "string", "description": "e.g. Starting from" },
+        "badge": { "type": "string", "description": "e.g. Best Value, New" },
+        "isPopular": { "type": "boolean" },
+        "isActive": { "type": "boolean" },
+        "sortOrder": { "type": "integer" },
+        "buttonText": { "type": "string", "default": "Choose Plan" },
+        "buttonLink": { "type": "string", "default": "/contact" },
+        "deliveryTime": { "type": "string" },
+        "category": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "slug", "price", "sortOrder"]
+    },
+    "PricingFeature": {
+      "title": "Pricing Feature",
+      "description": "A specific feature within a pricing plan",
+      "type": "object",
+      "properties": {
+        "planId": { "type": "string" },
+        "featureText": { "type": "string" },
+        "isIncluded": { "type": "boolean", "default": true },
+        "sortOrder": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["featureText", "sortOrder"]
+    },
+    "Project": {
+      "title": "Project",
+      "description": "A portfolio project",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "category": { "type": "string" },
+        "description": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "link": { "type": "string" },
+        "featured": { "type": "boolean" },
+        "order": { "type": "integer" }
+      },
+      "required": ["title", "category", "imageUrl"]
+    },
+    "Testimonial": {
+      "title": "Testimonial",
+      "description": "Client feedback",
+      "type": "object",
+      "properties": {
+        "clientName": { "type": "string" },
+        "businessName": { "type": "string" },
+        "content": { "type": "string" },
+        "rating": { "type": "integer" },
+        "avatarUrl": { "type": "string" }
+      },
+      "required": ["clientName", "content", "rating"]
+    },
+    "BlogPost": {
+      "title": "Blog Post",
+      "description": "An article or news item",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "slug": { "type": "string" },
+        "content": { "type": "string" },
+        "excerpt": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "category": { "type": "string" },
+        "publishedAt": { "type": "string", "format": "date-time" },
+        "author": { "type": "string" }
+      },
+      "required": ["title", "slug", "content"]
+    },
+    "Lead": {
+      "title": "Lead",
+      "description": "A contact inquiry",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "message": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "status": { "type": "string", "enum": ["new", "contacted", "closed"] }
+      },
+      "required": ["name", "email", "message"]
+    },
+    "Settings": {
+      "title": "Settings",
+      "description": "Site-wide configuration",
+      "type": "object",
+      "properties": {
+        "gaTrackingId": { "type": "string" },
+        "metaTitle": { "type": "string" },
+        "metaDescription": { "type": "string" },
+        "contactEmail": { "type": "string" },
+        "whatsappNumber": { "type": "string" },
+        "address": { "type": "string" }
+      }
+    }
+  },
+  "firestore": {
+    "/services/{serviceId}": { "schema": "Service", "description": "Collection of services" },
+    "/pricing/{planId}": { "schema": "PricingPlan", "description": "Collection of pricing plans" },
+    "/pricing/{planId}/features/{featureId}": { "schema": "PricingFeature", "description": "Sub-collection of features for a specific plan" },
+    "/portfolio/{projectId}": { "schema": "Project", "description": "Collection of portfolio projects" },
+    "/testimonials/{testimonialId}": { "schema": "Testimonial", "description": "Collection of testimonials" },
+    "/blog/{postId}": { "schema": "BlogPost", "description": "Collection of blog posts" },
+    "/leads/{leadId}": { "schema": "Lead", "description": "Collection of contact inquiries" },
+    "/settings/general": { "schema": "Settings", "description": "Global site settings" }
+  }
+}
